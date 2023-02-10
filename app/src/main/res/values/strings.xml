@@ -1,0 +1,36 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- UI items-->
+    <string name="app_name">MDPGrp22</string>
+    <string name="map">Map</string>
+    <string name="position">Position</string>
+    <string name="direction">Direction</string>
+    <string name="x">X:</string>
+    <string name="y">Y:</string>
+    <string name="task1">Autonomous Image Recognition</string>
+    <string name="task2">Fastest Robot</string>
+    <string name="robotStatus">Robot Status:</string>
+    <string name="bluetooth_messages">Bluetooth stream:</string>
+
+    <!--  DeviceListActivity -->
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="other_available_devices">Other Available Devices</string>
+    <string name="scan_button">Scan</string>
+
+    <!--  BluetoothFrag -->
+    <string name="send_button">Send</string>
+    <string name="no_connected_device">There is no connected device</string>
+    <string name="bt_not_enabled">Bluetooth is not enabled</string>
+    <string name="connecting">connecting...</string>
+    <string name="connected_to_device">connected to <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="not_connected">not connected</string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Connect a device (Secure)</string>
+    <string name="insecure_connect">Connect a device (Insecure)</string>
+    <string name="discoverable">Make discoverable</string>
+
+</resources>
