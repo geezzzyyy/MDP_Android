@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/grey_box">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Select the side of image on obstacle"
+        android:textStyle="bold"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="600px"
+        android:layout_height="600px"
+        android:layout_marginTop="50px">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintDimensionRatio="1:1">
+
+            <Button
+                android:id="@+id/obstacleNorthSide"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/obstacleSouthSide"
+                android:layout_width="300px"
+                android:layout_height="100px"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/obstacleWestSide"
+                android:layout_width="100px"
+                android:layout_height="300px"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <Button
+                android:id="@+id/obstacleEastSide"
+                android:layout_width="100px"
+                android:layout_height="300px"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
