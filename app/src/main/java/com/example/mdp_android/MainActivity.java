@@ -182,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     arenaInfo = arenaInfo.concat(obstacle.getX() +  " " + obstacle.getY() + " " + obstacle.getDegree() + " " + obstacle.getNumber() + "\n");
                 }
                 Log.d(TAG, arenaInfo);
+                outgoingMessage(arenaInfo);
 
 
             }
