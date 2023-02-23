@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MapGrid extends View {
+    public static final String TAG = "MapGrid";
     // dimensions of canvas
     private int width;
     private int height;
@@ -260,8 +261,9 @@ public class MapGrid extends View {
                 if (objectToMove instanceof Robot) {
                     MainActivity ma = (MainActivity) this.getContext();
 
-                    // Message format: Robot:1,dir,x,y
-                    ma.outgoingMessage("Robot:1," + Character.toLowerCase(MainActivity.robot.getDirection()) + "," + MainActivity.robot.getX() + "," + MainActivity.robot.getY());
+                    // Message format: Robot:x,y,degree
+                    Log.d(TAG, "Robot:"  + MainActivity.robot.getX() + "," + MainActivity.robot.getY() + "," + MainActivity.robot.getDegree());
+                    ma.outgoingMessage("Robot:"  + MainActivity.robot.getX() + "," + MainActivity.robot.getY() + "," + MainActivity.robot.getDegree());
 
                     if ((initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY())
                             || (initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY()+1)
@@ -316,8 +318,9 @@ public class MapGrid extends View {
         obstacle.setSide(side);
         invalidate();
         MainActivity ma = (MainActivity) this.getContext();
-        // Message format: Obstacle:obstacleNo,dir,x,y
-        ma.outgoingMessage("Obstacle:" + obstacle.getNumber() + "," + Character.toLowerCase(obstacle.getSide()) + "," + obstacle.getX() + "," + obstacle.getY());
+        // Message format: x,y, degree, id
+        Log.d(TAG, "Obstacle:" + obstacle.getX() +  "," + obstacle.getY() + "," + obstacle.getDegree() + "," + obstacle.getNumber());
+        ma.outgoingMessage("Obstacle:" + obstacle.getX() +  "," + obstacle.getY() + "," + obstacle.getDegree() + "," + obstacle.getNumber());
     }
 
 }

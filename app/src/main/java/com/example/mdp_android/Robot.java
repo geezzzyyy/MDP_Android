@@ -40,7 +40,7 @@ public class Robot implements ICoordinate{
 
     @Override
     public boolean containsCoordinate(int x, int y) {
-        Log.d("ROBOT:", "" + this.x + ", " + this.y);
+        Log.d("ROBOT", "" + this.x + ", " + this.y + ", " + getDegree());
         if (this.x <= x && x <= (this.x + 2) && this.y <= y && y <= (this.y + 2)){
             return true;
         }
@@ -57,6 +57,22 @@ public class Robot implements ICoordinate{
 
     public char getDirection(){
         return direction;
+    }
+
+    public int getDegree(){
+        switch (this.direction) {
+            case 'E':
+                return 0;
+            case 'N':
+                return 90;
+            case 'W':
+                return 180;
+            case 'S':
+                return 270;
+            default:
+                return -1;
+
+        }
     }
 
     public void setDirection(char direction){
@@ -85,6 +101,34 @@ public class Robot implements ICoordinate{
                 //W
                 int newX = this.x - 1;
                 if (newX >= 0) {
+                    this.setX(newX);
+                }
+            }
+        }
+    }
+
+    public void moveRobotBackward(){
+        char robotDir = getDirection();
+        if (this.x != -1 && this.y != -1) {
+            if(robotDir == 'N') {
+                int newY = this.y - 1;
+                if (newY >=0) {
+                    this.setY(newY);
+                }
+            } else if (robotDir == 'S') {
+                int newY = this.y + 1;
+                if (newY <= 17) {
+                    this.setY(newY);
+                }
+            } else if (robotDir == 'E') {
+                int newX = this.x - 1;
+                if (newX >= 0) {
+                    this.setX(newX);
+                }
+            } else {
+                //W
+                int newX = this.x + 1;
+                if (newX <= 17) {
                     this.setX(newX);
                 }
             }

@@ -52,6 +52,21 @@ public class Obstacle implements ICoordinate{
     public char getSide(){
         return this.side;
     }
+    public int getDegree(){
+        switch (this.side) {
+            case 'E':
+                return 0;
+            case 'N':
+                return 90;
+            case 'W':
+                return 180;
+            case 'S':
+                return 270;
+            default:
+                return -1;
+
+        }
+    }
 
     public boolean setSide(char side){
         if (side != 'N' && side != 'S' && side != 'E' && side != 'W'){

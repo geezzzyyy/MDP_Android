@@ -30,7 +30,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="MDPGrp22"
+            android:label="@string/app_name"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +41,7 @@
         <activity
             android:name="com.example.mdp_android.bluetooth.DeviceListActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/select_device"
-            android:theme="@android:style/Theme.Holo.Dialog" />
+            android:label="@string/select_device" />
     </application>
 
 </manifest>

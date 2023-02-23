@@ -25,13 +25,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mdp_android.MainActivity;
+import com.example.mdp_android.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-
-import com.example.mdp_android.MainActivity;
-import com.example.mdp_android.R;
 
 
 /**
@@ -71,6 +71,8 @@ import com.example.mdp_android.R;
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             activity.finish();
         }
+
+
     }
 
     @Override
@@ -266,6 +268,7 @@ import com.example.mdp_android.R;
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    Log.d(TAG, (readMessage.split(":")[0]));
                     boolean messageIsCommand = false;
                     if (readMessage.split(",")[0].equals("ROBOT")){
                         String[] splitString = readMessage.split(",");
@@ -279,6 +282,19 @@ import com.example.mdp_android.R;
                         } else if (splitString.length == 2){
                             MainActivity.updateRobotStatus(splitString[1]);
                             messageIsCommand = true;
+                        }
+                    } else if (readMessage.split(":")[0].equals("{\"status\"")){
+                        Log.d(TAG, readMessage.split(":")[0]);
+                        String[] splitString = readMessage.split(":");
+                        if (splitString.length == 2 ){
+                            Log.d(TAG, splitString[1]);
+                            String[] statusString =splitString[1].split("}");
+                            Log.d(TAG, statusString[0]);
+                            if (MainActivity.updateRobotStatus(statusString[0])){
+                                messageIsCommand = true;
+                            } else {
+                                Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     } else if (readMessage.split(",")[0].equals("TARGET")){
                         String[] splitString = readMessage.split(",");

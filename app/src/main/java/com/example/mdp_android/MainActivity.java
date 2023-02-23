@@ -100,6 +100,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.downButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // to check if is moving out of range
+                if ((robot.getY() != 17 && robot.getY() >= 0 && (robot.getDirection() == 'N' || robot.getDirection() == 'S'))
+                        || (robot.getX() != 17 && robot.getX() >= 0 && (robot.getDirection() == 'E' || robot.getDirection() == 'W'))
+                        || ((robot.getX() == 17 || robot.getY() == 17) && (robot.getDirection() == 'W' || robot.getDirection() == 'S'))
+                        || ((robot.getX() == 0 || robot.getY() == 0) && (robot.getDirection() == 'N' || robot.getDirection() == 'E'))
+                ) {
+                    robot.moveRobotBackward();
+                    mapGrid.invalidate();
+
+                    outgoingMessage(Constants.BACKWARD);
+                    Toast.makeText(MainActivity.this, "Move Backwards", Toast.LENGTH_SHORT).show();
+                }
+
+                if (robot.getX() != -1 && robot.getY() != -1) {
+                    robotCoordinateXText.setText(String.valueOf(robot.getX()));
+                    robotCoordinateYText.setText(String.valueOf(robot.getY()));
+                    robotDirText.setText(String.valueOf(robot.getDirection()));
+                } else {
+                    robotCoordinateXText.setText("-");
+                    robotCoordinateYText.setText("-");
+                    robotDirText.setText("-");
+                }
+
+            }
+        });
+
         // left button is pressed to turn the robot in the clockwise dir
         findViewById(R.id.leftButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,12 +172,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        findViewById(R.id.sendArenaInfoButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String arenaInfo = robot.getX() + " " + robot.getY() + " " + robot.getDegree() + "\n";
+                Log.d(TAG, arenaInfo);
+                for (int i =0; i< Map.getInstance().getObstacles().size(); i++) {
+                    Obstacle obstacle = Map.getInstance().getObstacles().get(i);
+                    arenaInfo = arenaInfo.concat(obstacle.getX() +  " " + obstacle.getY() + " " + obstacle.getDegree() + " " + obstacle.getNumber() + "\n");
+                }
+                Log.d(TAG, arenaInfo);
+
+
+            }
+        });
+        // button to test the manual snap function
+        findViewById(R.id.manualSnapButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                outgoingMessage("<Manual Snap>");
+            }
+        });
 
         // button to initiate challenge 1 - autonomous image recognition task
         findViewById(R.id.imageRecognitionStartButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                outgoingMessage("begin");
+                outgoingMessage("<Image Recognition>");
             }
         });
 
@@ -155,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.fastestRobotStartButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                outgoingMessage("fastest");
+                outgoingMessage("<Fastest Car>");
             }
         });
 
@@ -256,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static boolean setRobotPosition(int x, int y, char direction) {
-        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'n' || direction == 's' || direction == 'e' || direction == 'w')) {
+        if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')) {
             robot.setCoordinates(x, y);
             robot.setDirection(toUpperCase(direction));
             robotCoordinateXText.setText(String.valueOf(robot.getX()));
@@ -279,9 +330,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public static void updateRobotStatus(String status) {
+    public static boolean updateRobotStatus(String status) {
         robot.setStatus(status);
         robotStatusText.setText(robot.getStatus());
+        return true;
     }
 
     @Override

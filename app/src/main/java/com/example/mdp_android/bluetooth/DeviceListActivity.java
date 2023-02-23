@@ -61,12 +61,12 @@ public class DeviceListActivity extends Activity {
         mNewDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.device_name);
 
         // Find and set up the ListView for paired devices
-        ListView pairedListView = findViewById(R.id.paired_devices);
+        ListView pairedListView = findViewById(R.id.PairedDevices);
         pairedListView.setAdapter(pairedDevicesArrayAdapter);
         pairedListView.setOnItemClickListener(mDeviceClickListener);
 
         // Find and set up the ListView for newly discovered devices
-        ListView newDevicesListView = findViewById(R.id.new_devices);
+        ListView newDevicesListView = findViewById(R.id.NewDevices);
         newDevicesListView.setAdapter(mNewDevicesArrayAdapter);
         newDevicesListView.setOnItemClickListener(mDeviceClickListener);
 
@@ -90,7 +90,7 @@ public class DeviceListActivity extends Activity {
 
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
-            findViewById(R.id.paired_devices_title).setVisibility(View.VISIBLE);
+//            findViewById(R.id.paired_devices_title).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
                 pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
@@ -122,7 +122,7 @@ public class DeviceListActivity extends Activity {
         Log.d(TAG, "doDiscovery()");
 
         // Turn on sub-title for new devices
-        findViewById(R.id.new_devices_title).setVisibility(View.VISIBLE);
+//        findViewById(R.id.new_devices_title).setVisibility(View.VISIBLE);
 
         // If we're already discovering, stop it
         if (mBluetoothAdapter.isDiscovering()) {

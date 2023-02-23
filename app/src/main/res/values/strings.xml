@@ -11,6 +11,7 @@
     <string name="task1">Autonomous Image Recognition</string>
     <string name="task2">Fastest Robot</string>
     <string name="bluetooth">Bluetooth</string>
+    <string name="sendArena">Send Robot and obstacles Info</string>
     <string name="robotStatus">Robot Status:</string>
     <string name="textView">Text View Box:</string>
     <string name="bluetooth_messages">Bluetooth Messages:</string>
