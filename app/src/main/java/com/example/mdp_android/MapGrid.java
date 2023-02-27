@@ -14,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MapGrid extends View {
-    public static final String TAG = "MapGrid";
     // dimensions of canvas
     private int width;
     private int height;
@@ -43,7 +42,7 @@ public class MapGrid extends View {
     // Images
     private final Bitmap robotBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robot);
     private final Bitmap robotBoxBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.robot_blank);
-    private final Bitmap obstacleBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.cone);
+    private final Bitmap obstacleBitmap = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.obstacle);
 
     // Handle motion
     private int initialX;
@@ -82,7 +81,7 @@ public class MapGrid extends View {
         exploredWhiteNumber.setTextSize(23);
         exploredWhiteNumber.setTextAlign(Paint.Align.CENTER);
     }
-                                                              
+
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
@@ -222,10 +221,10 @@ public class MapGrid extends View {
                 // Touch robot on map
                 if (MainActivity.robot.containsCoordinate(initialX, initialY)) {
                     objectToMove = MainActivity.robot;
-                // Robot not on map and touch robot button
+                    // Robot not on map and touch robot button
                 } else if ((MainActivity.robot.getX() == -1 || MainActivity.robot.getY() == -1) && (sideBarLeft <= initialX && initialX <= sideBarRight && robotBoxBottom <= initialY && initialY <= robotBoxTop)){
                     objectToMove = MainActivity.robot;
-                // Touch obstacle button
+                    // Touch obstacle button
                 } else if (sideBarLeft <= initialX && initialX <= sideBarRight && obstacleBoxBottom <= initialY && initialY <= obstacleBoxTop) {
                     objectToMove = Map.getInstance().addObstacle();
                 } else {
@@ -261,9 +260,8 @@ public class MapGrid extends View {
                 if (objectToMove instanceof Robot) {
                     MainActivity ma = (MainActivity) this.getContext();
 
-                    // Message format: Robot:x,y,degree
-                    Log.d(TAG, "Robot:"  + MainActivity.robot.getX() + "," + MainActivity.robot.getY() + "," + MainActivity.robot.getDegree());
-                    ma.outgoingMessage("Robot:"  + MainActivity.robot.getX() + "," + MainActivity.robot.getY() + "," + MainActivity.robot.getDegree());
+                    // Message format: Robot:1,dir,x,y
+                    ma.outgoingMessage("Robot:1," + Character.toLowerCase(MainActivity.robot.getDirection()) + "," + MainActivity.robot.getX() + "," + MainActivity.robot.getY());
 
                     if ((initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY())
                             || (initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY()+1)
@@ -290,7 +288,7 @@ public class MapGrid extends View {
                         invalidate();
                     }
 
-                // adding/removing obstacles
+                    // adding/removing obstacles
                 } else if (objectToMove instanceof Obstacle){
                     if ((finalX < 0 || finalX > numColumns - 1) || (finalY < 0 || finalY > numRows - 1)){
                         Map.getInstance().removeObstacle((Obstacle) objectToMove);
@@ -318,9 +316,8 @@ public class MapGrid extends View {
         obstacle.setSide(side);
         invalidate();
         MainActivity ma = (MainActivity) this.getContext();
-        // Message format: x,y, degree, id
-        Log.d(TAG, "Obstacle:" + obstacle.getX() +  "," + obstacle.getY() + "," + obstacle.getDegree() + "," + obstacle.getNumber());
-        ma.outgoingMessage("Obstacle:" + obstacle.getX() +  "," + obstacle.getY() + "," + obstacle.getDegree() + "," + obstacle.getNumber());
+        // Message format: Obstacle:obstacleNo,dir,x,y
+        ma.outgoingMessage("Obstacle:" + obstacle.getNumber() + "," + Character.toLowerCase(obstacle.getSide()) + "," + obstacle.getX() + "," + obstacle.getY());
     }
 
 }

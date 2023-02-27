@@ -5,8 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey"
     tools:context=".MainActivity"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gradient_background">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ui"
@@ -19,24 +43,23 @@
             android:id="@+id/mapText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/yellow"
+            android:background="@color/blue"
             android:gravity="center"
             android:text="@string/headerName"
-            android:fontFamily="@font/aileron_light"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_weight="3">
+            android:layout_height="22dp"
+            android:layout_weight="7"
+            android:background="@color/grey">
 
             <com.example.mdp_android.MapGrid
                 android:id="@+id/mapGrid"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/pastel_brown"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1.2:1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +70,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="2"
+            android:layout_marginTop="10dp"
+            android:layout_weight="4"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -62,7 +85,7 @@
                     android:id="@+id/constraintButtons"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:layout_gravity="start">
+                    android:layout_gravity="center_vertical">
 
                     <RelativeLayout
                         android:id="@+id/movement_buttons"
@@ -125,55 +148,6 @@
 
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/task_buttons"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-
-                        android:layout_marginBottom="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="4:1"
-                        app:layout_constraintEnd_toEndOf="@id/constraintButtons"
-                        app:layout_constraintEnd_toStartOf="@id/constraintButtons">
-
-                        <ImageButton
-                            android:id="@+id/imageRecognitionStartButton"
-                            android:layout_width="40dp"
-                            android:layout_height="44dp"
-                            android:layout_marginStart="80dp"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="@string/task1"
-                            app:srcCompat="@drawable/detect" />
-
-                        <ImageButton
-                            android:id="@+id/manualSnapButton"
-                            android:layout_width="40dp"
-                            android:layout_height="44dp"
-                            android:layout_marginStart="40dp"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="@string/task1"
-                            app:srcCompat="@drawable/snap" />
-
-                        <ImageButton
-                            android:id="@+id/sendArenaInfoButton"
-                            android:layout_width="40dp"
-                            android:layout_height="44dp"
-                            android:layout_marginStart="0dp"
-                            android:contentDescription="@string/sendArena"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/arena" />
-
-                        <ImageButton
-                            android:id="@+id/fastestRobotStartButton"
-                            android:layout_width="40dp"
-                            android:layout_height="44dp"
-                            android:layout_marginStart="120dp"
-                            android:contentDescription="@string/task2"
-                            android:scaleType="fitCenter"
-                            app:srcCompat="@drawable/speed" />
-
-                    </RelativeLayout>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
@@ -204,6 +178,7 @@
                             android:fontFamily="@font/aileron_light"
                             android:textSize="12sp"
                             android:textStyle="bold" />
+
                         <TextView
                             android:id="@+id/robotStatus"
                             android:layout_width="160dp"
@@ -225,7 +200,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="243dp"
+                    android:layout_width="244dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
@@ -240,13 +215,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/position"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/aileron_light"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="12sp" />
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="138dp"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
@@ -261,19 +235,17 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/x"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/aileron_light"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/robotXCoordinate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp" />
 
                             </RelativeLayout>
 
@@ -288,19 +260,17 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/y"
-                                    android:textColor="@color/black"
-                                    android:fontFamily="@font/aileron_light"
-                                    android:textSize="12sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="@color/white"
+                                    android:fontFamily="@font/poppins_medium"
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/robotYCoordinate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
-                                    android:textColor="@color/black"
-                                    android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
 
                             </RelativeLayout>
 
@@ -321,19 +291,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/direction"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/aileron_light"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textSize="12sp"/>
 
                         <TextView
                             android:id="@+id/robotDirection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -341,7 +309,7 @@
 
                 <FrameLayout
                     android:id="@+id/bluetooth_stream_box"
-                    android:layout_width="243dp"
+                    android:layout_width="244dp"
                     android:layout_height="244dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
@@ -349,12 +317,91 @@
                     android:orientation="vertical"
                     android:textSize="11sp">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/textView"
+                        android:textColor="@color/white"
 
+                        android:fontFamily="@font/poppins_medium"
+                        android:textSize="12sp" />
 
                 </FrameLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/taskButtons"
+                    android:layout_width="153dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/task_buttons"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="4:1"
+                        app:layout_constraintEnd_toEndOf="@id/taskButtons"
+                        app:layout_constraintEnd_toStartOf="@id/taskButtons">
+
+                        <ImageButton
+                            android:id="@+id/imageRecognitionStartButton"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="1dp"
+                            android:background="@color/blue"
+                            android:contentDescription="@string/task1"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/detect" />
+
+                        <ImageButton
+                            android:id="@+id/fastestRobotStartButton"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="72dp"
+                            android:background="@color/blue"
+                            android:contentDescription="@string/task2"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/speed" />
+
+                        <ImageButton
+                            android:id="@+id/sendArenaInfoButton"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="144dp"
+                            android:background="@color/blue"
+                            android:contentDescription="@string/sendArena"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/arena" />
+
+                        <ImageButton
+                            android:id="@+id/manualSnapButton"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="216dp"
+                            android:background="@color/blue"
+                            android:contentDescription="@string/manualSnap"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/snap" />
+
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
