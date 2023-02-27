@@ -2,7 +2,7 @@
     <!-- UI items-->
     <string name="app_name">MDPGrp24AY22/23Sem2</string>
     <string name="map">Map</string>
-    <string name="headerName">MDP Group 24</string>
+    <string name="headerName">Arena Map</string>
     <string name="position">Position</string>
     <string name="direction">Direction</string>
     <string name="x">X:</string>
@@ -10,6 +10,7 @@
     <string name="move">Move:</string>
     <string name="task1">Autonomous Image Recognition</string>
     <string name="task2">Fastest Robot</string>
+    <string name="manualSnap">Manual Snap</string>
     <string name="bluetooth">Bluetooth</string>
     <string name="sendArena">Send Robot and obstacles Info</string>
     <string name="robotStatus">Robot Status:</string>
