@@ -104,6 +104,7 @@ import androidx.fragment.app.FragmentActivity;
     // in case where Bluetooth is not enabled at start, onResume called once Bluetooth is enabled
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "ON Resume in BTFragment");
 
         if (mBluetoothService != null) {
             // Only if the state is STATE_NONE, do we know that we haven't started already
@@ -288,9 +289,9 @@ import androidx.fragment.app.FragmentActivity;
                         String[] splitString = readMessage.split(":");
                         if (splitString.length == 2 ){
                             Log.d(TAG, splitString[1]);
-                            String[] statusString =splitString[1].split("}");
-                            Log.d(TAG, statusString[0]);
-                            if (MainActivity.updateRobotStatus(statusString[0])){
+                            String statusString =splitString[1].replace("}", "");
+                            Log.d(TAG, statusString);
+                            if (MainActivity.updateRobotStatus(statusString)){
                                 messageIsCommand = true;
                             } else {
                                 Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
@@ -390,6 +391,12 @@ import androidx.fragment.app.FragmentActivity;
             case R.id.discoverable: {
                 // Ensure this device is discoverable by others
                 ensureDiscoverable();
+                return true;
+            }
+            case R.id.disconnect: {
+                // Ensure this device is discoverable by others
+                if (mBluetoothService == null) return false;
+                mBluetoothService.disconnectRemoteDevice();
                 return true;
             }
         }

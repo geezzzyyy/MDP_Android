@@ -13,8 +13,10 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,14 +31,17 @@ import com.example.mdp_android.bluetooth.Constants;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
+    public static String currentRobotStatus;
     static Robot robot = new Robot();
     MutableLiveData<String> listen = new MutableLiveData<>();
     public static TextView robotCoordinateXText;
     public static TextView robotCoordinateYText;
     public static TextView robotDirText;
+    public static ListView robotStatusList;
     public static TextView robotStatusText;
     private static MapGrid mapGrid;
     BluetoothFrag bluetoothFragment;
+    private static ArrayAdapter<String> statusArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         //assign robot status
         robotStatusText = findViewById(R.id.robotStatus);
+        robotStatusList = findViewById(R.id.statusList);
+
+        statusArrayAdapter = new ArrayAdapter<>(this, R.layout.bluetooth_message);
+        robotStatusList.setAdapter(statusArrayAdapter);
 
         // Remove shadow of action bar
         getSupportActionBar().setElevation(0);
@@ -332,8 +341,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static boolean updateRobotStatus(String status) {
+        if (currentRobotStatus != null) updateStatusList(currentRobotStatus);
         robot.setStatus(status);
         robotStatusText.setText(robot.getStatus());
+        currentRobotStatus = status;
+        return true;
+    }
+
+    public static boolean updateStatusList(String status) {
+        statusArrayAdapter.add(status);
         return true;
     }
 

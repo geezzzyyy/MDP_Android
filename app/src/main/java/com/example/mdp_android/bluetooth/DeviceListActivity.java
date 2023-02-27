@@ -86,8 +86,8 @@ public class DeviceListActivity extends Activity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         // Get all already paired devices
-        @SuppressLint("MissingPermission") Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-
+        @SuppressLint("MissingPermission")
+        Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
 //            findViewById(R.id.paired_devices_title).setVisibility(View.VISIBLE);

@@ -127,6 +127,28 @@ public class BluetoothService {
         updateUserInterfaceTitle();
     }
 
+    public synchronized void disconnectRemoteDevice() {
+        Log.d(TAG, "disconnect... " );
+
+        // Cancel any thread attempting to make a connection
+        if (mState == STATE_CONNECTING) {
+            if (mConnectThread != null) {
+                mConnectThread.cancel();
+                mConnectThread = null;
+            }
+        }
+
+        // Cancel any thread currently running a connection
+        if (mConnectedThread != null) {
+            mConnectedThread.cancel();
+            mConnectedThread = null;
+        }
+        bluetoothConnectionLost();
+
+        // Update UI title
+        updateUserInterfaceTitle();
+    }
+
     // start connectedThread to manage Bluetooth connection
     @SuppressLint("MissingPermission")
     public synchronized void connected(BluetoothSocket socket, BluetoothDevice
@@ -275,7 +297,6 @@ public class BluetoothService {
             mmServerSocket = tmp;
             mState = STATE_LISTENING;
         }
-
         public void run() {
             Log.d(TAG, "Socket Type: " + mSocketType + "BEGIN mAcceptThread" + this);
             setName("AcceptThread" + mSocketType);
@@ -319,7 +340,6 @@ public class BluetoothService {
             Log.i(TAG, "END mAcceptThread, socket Type: " + mSocketType);
 
         }
-
         public void cancel() {
             Log.d(TAG, "Socket Type" + mSocketType + "cancel " + this);
             try {
@@ -430,7 +450,6 @@ public class BluetoothService {
             mmOutStream = tmpOut;
             mState = STATE_CONNECTED;
         }
-
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
@@ -452,7 +471,6 @@ public class BluetoothService {
                 }
             }
         }
-
         // write to connected outstream
         public void write(byte[] buffer) {
             try {
@@ -464,7 +482,6 @@ public class BluetoothService {
                 Log.e(TAG, "Exception during write", e);
             }
         }
-
         public void cancel() {
             try {
                 mmSocket.close();

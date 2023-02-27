@@ -17,4 +17,9 @@
         android:id="@+id/discoverable"
         android:title="@string/discoverable"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/disconnect"
+        android:icon="@drawable/disconnect"
+        android:title="@string/disconnect"
+        app:showAsAction="ifRoom" />
 </menu>
