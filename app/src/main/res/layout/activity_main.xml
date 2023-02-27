@@ -68,35 +68,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:layout_weight="4"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
-                android:layout_weight="2"
                 android:orientation="vertical">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintButtons"
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_gravity="center_vertical">
 
                     <RelativeLayout
                         android:id="@+id/movement_buttons"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
                         android:layout_marginBottom="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="4:2.7"
-                        app:layout_constraintEnd_toEndOf="@id/constraintButtons"
-                        app:layout_constraintEnd_toStartOf="@id/constraintButtons">
+                        app:layout_constraintDimensionRatio="4:2.7">
 
                         <ImageButton
                             android:id="@+id/leftButton"
@@ -148,10 +139,9 @@
 
                     </RelativeLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal">
 
@@ -194,9 +184,8 @@
 
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -317,41 +306,24 @@
                     android:orientation="vertical"
                     android:textSize="11sp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/textView"
-                        android:textColor="@color/white"
-
-                        android:fontFamily="@font/poppins_medium"
-                        android:textSize="12sp" />
-
                 </FrameLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/taskButtons"
-                    android:layout_width="153dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical">
 
                     <RelativeLayout
                         android:id="@+id/task_buttons"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
 
                         android:layout_marginTop="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="4:1"
-                        app:layout_constraintEnd_toEndOf="@id/taskButtons"
-                        app:layout_constraintEnd_toStartOf="@id/taskButtons">
+                        app:layout_constraintDimensionRatio="4:1">
 
                         <ImageButton
                             android:id="@+id/imageRecognitionStartButton"
@@ -399,7 +371,6 @@
 
                     </RelativeLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
