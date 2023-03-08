@@ -16,10 +16,10 @@ public interface Constants {
     String DEVICE_NAME = "device_name";
     String TOAST = "toast";
 
-    String TURN_RIGHT = "D";
-    String TURN_LEFT = "A";
-    String FORWARD = "W";
-    String BACKWARD = "S";
+    String TURN_RIGHT = "RF090xx";
+    String TURN_LEFT = "LF090xx";
+    String FORWARD = "SF010xx";
+    String BACKWARD = "SB010xx";
     String STOP = "P";
 
 }

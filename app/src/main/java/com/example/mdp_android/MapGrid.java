@@ -261,7 +261,8 @@ public class MapGrid extends View {
                     MainActivity ma = (MainActivity) this.getContext();
 
                     // Message format: Robot:1,dir,x,y
-                    ma.outgoingMessage("Robot:1," + Character.toLowerCase(MainActivity.robot.getDirection()) + "," + MainActivity.robot.getX() + "," + MainActivity.robot.getY());
+                    Log.d("MainActivity", "Robot:1," + Character.toLowerCase(MainActivity.robot.getDirection()) + "," + MainActivity.robot.getX() + "," + MainActivity.robot.getY());
+
 
                     if ((initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY())
                             || (initialX == MainActivity.robot.getX() && initialY == MainActivity.robot.getY()+1)
@@ -293,14 +294,15 @@ public class MapGrid extends View {
                     if ((finalX < 0 || finalX > numColumns - 1) || (finalY < 0 || finalY > numRows - 1)){
                         Map.getInstance().removeObstacle((Obstacle) objectToMove);
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Removed Obstacle " + ((Obstacle) objectToMove).getNumber());
+                        Log.d("MainActivity","Removed Obstacle " + ((Obstacle) objectToMove).getNumber());
                     } else {
                         // If finger is released at a square
                         if (!Map.getInstance().isOccupied(finalX, finalY, (Obstacle) objectToMove)) {
                             objectToMove.setCoordinates(finalX, finalY);
                         }
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage(((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
+                        Log.d("MainActivity", ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
+
                     }
                     invalidate();
                 }
@@ -317,7 +319,7 @@ public class MapGrid extends View {
         invalidate();
         MainActivity ma = (MainActivity) this.getContext();
         // Message format: Obstacle:obstacleNo,dir,x,y
-        ma.outgoingMessage("Obstacle:" + obstacle.getNumber() + "," + Character.toLowerCase(obstacle.getSide()) + "," + obstacle.getX() + "," + obstacle.getY());
+        Log.d("MainActivity", "Obstacle:" + obstacle.getNumber() + "," + obstacle.getX() + "," + obstacle.getY() + "," + obstacle.getSide());
     }
 
 }

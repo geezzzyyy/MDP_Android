@@ -184,7 +184,9 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.sendArenaInfoButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String arenaInfo = robot.getX() + " " + robot.getY() + " " + robot.getDegree();
+                int x = robot.getX()+1;
+                int y = robot.getY()+1;
+                String arenaInfo = x + " " + y + " " + robot.getDegree();
                 Log.d(TAG, arenaInfo);
                 for (int i =0; i< Map.getInstance().getObstacles().size(); i++) {
                     Obstacle obstacle = Map.getInstance().getObstacles().get(i);

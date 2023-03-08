@@ -269,29 +269,45 @@ import androidx.fragment.app.FragmentActivity;
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    Log.d(TAG, (readMessage.split(":")[0]));
                     boolean messageIsCommand = false;
                     if (readMessage.split(",")[0].equals("ROBOT")){
                         String[] splitString = readMessage.split(",");
-                        if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1){
-                            if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))){
+                        if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && isInteger(splitString[3])){
+                            String direction;
+                            switch (Integer.parseInt(splitString[3])) {
+                                case 0:
+                                    direction = "E";
+                                    break;
+                                case 90:
+                                    direction = "N";
+                                    break;
+                                case 180:
+                                    direction = "W";
+                                    break;
+                                case 270:
+                                    direction = "S";
+                                    break;
+                                default:
+                                    direction = null;
+                            }
+                            if (direction.length() == 1 && MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), direction.charAt(0))){
                                 messageIsCommand = true;
-                            } else {
+                            } else if (direction.length() == 1){
                                 // TODO: check message
                                 Toast.makeText(activity, "Robot is out of range", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(activity, "Direction not recognized", Toast.LENGTH_SHORT).show();
                             }
-                        } else if (splitString.length == 2){
-                            MainActivity.updateRobotStatus(splitString[1]);
-                            messageIsCommand = true;
                         }
-                    } else if (readMessage.split(":")[0].equals("{\"status\"")){
-                        Log.d(TAG, readMessage.split(":")[0]);
-                        String[] splitString = readMessage.split(":");
+                    } else if (readMessage.split(",")[0].split(":")[0].equals("{\"cat\"")) {
+                        Log.d(TAG, readMessage.split(",")[1]);
+                        String[] splitString = readMessage.split(",");
                         if (splitString.length == 2 ){
                             Log.d(TAG, splitString[1]);
-                            String statusString =splitString[1].replace("}", "");
+                            String catString = splitString[0].split(":")[1].replace("}", "");
+                            String statusString = splitString[1].split(":")[1].replace("}", "");
                             Log.d(TAG, statusString);
-                            if (MainActivity.updateRobotStatus(statusString)){
+                            if (MainActivity.updateRobotStatus(catString + ":" + statusString)){
                                 messageIsCommand = true;
                             } else {
                                 Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
