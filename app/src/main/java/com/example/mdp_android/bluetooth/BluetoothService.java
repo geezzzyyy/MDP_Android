@@ -47,6 +47,8 @@ public class BluetoothService {
     public static final int STATE_LISTENING = 1;     // state = listening for incoming connections
     public static final int STATE_CONNECTING = 2; // state = initiating an outgoing connection
     public static final int STATE_CONNECTED = 3;  // state = connected to a remote device
+    public BluetoothDevice BTdevice;
+    public boolean BTsecure;
 
     // constructor to prepare a new BluetoothService session
     public BluetoothService(Context context, Handler handler) {
@@ -75,6 +77,7 @@ public class BluetoothService {
     // will be called by onResume()
     public synchronized void startService() {
         Log.d(TAG, "Starting Bluetooth Service");
+        this.BTdevice = null;
 
         // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {
@@ -105,6 +108,8 @@ public class BluetoothService {
     // start connectThread to initiate connection to remote Bluetooth device
     public synchronized void connectToRemoteDevice(BluetoothDevice device, boolean secure) {
         Log.d(TAG, "connect to: " + device);
+        this.BTdevice = device;
+        this.BTsecure = secure;
 
         // Cancel any thread attempting to make a connection
         if (mState == STATE_CONNECTING) {
@@ -115,13 +120,15 @@ public class BluetoothService {
         }
 
         // Cancel any thread currently running a connection
-        if (mConnectedThread != null) {
-            mConnectedThread.cancel();
-            mConnectedThread = null;
+        if (mState == STATE_CONNECTED){
+            if (mConnectedThread != null) {
+                mConnectedThread.cancel();
+                mConnectedThread = null;
+            }
         }
 
         // Start the thread to connect with the given device
-        mConnectThread = new ConnectThread(device, secure);
+        mConnectThread = new ConnectThread(this.BTdevice, this.BTsecure);
         mConnectThread.start();
         // Update UI title
         updateUserInterfaceTitle();
@@ -129,6 +136,7 @@ public class BluetoothService {
 
     public synchronized void disconnectRemoteDevice() {
         Log.d(TAG, "disconnect... " );
+         this.BTdevice = null;
 
         // Cancel any thread attempting to make a connection
         if (mState == STATE_CONNECTING) {
@@ -143,7 +151,7 @@ public class BluetoothService {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
-        bluetoothConnectionLost();
+        //bluetoothConnectionLost();
 
         // Update UI title
         updateUserInterfaceTitle();
@@ -194,6 +202,7 @@ public class BluetoothService {
 
     public synchronized void stopAllThreads() {
         Log.d(TAG, "stop");
+        this.BTdevice = null;
 
         if (mConnectThread != null) {
             mConnectThread.cancel();
@@ -249,6 +258,14 @@ public class BluetoothService {
 
         // try to restart service
         BluetoothService.this.startService();
+//        if(BTdevice == null) {
+//            Log.d(TAG, "BTdevice is null");
+//            BluetoothService.this.startService();
+//        }
+//        else {
+//            Log.d(TAG, "BTdevice found");
+//            BluetoothService.this.connectToRemoteDevice(this.BTdevice, this.BTsecure);
+//        }
     }
 
     // Indicate that the connection was lost and notify the UI Activity.
@@ -266,7 +283,14 @@ public class BluetoothService {
         updateUserInterfaceTitle();
 
         // try to restart service
-        BluetoothService.this.startService();
+        if(BTdevice == null) {
+            Log.d(TAG, "BTdevice is null");
+            BluetoothService.this.startService();
+        }
+        else {
+            Log.d(TAG, "BTdevice found");
+            BluetoothService.this.connectToRemoteDevice(this.BTdevice, this.BTsecure);
+        }
     }
 
     /**
