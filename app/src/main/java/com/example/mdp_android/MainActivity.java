@@ -271,10 +271,18 @@ public class MainActivity extends AppCompatActivity {
         Button btnE = (Button) popupView.findViewById(R.id.obstacleEastSide);
         Button btnW = (Button) popupView.findViewById(R.id.obstacleWestSide);
 
+        TextView obstacleXCoordinate = (TextView) popupView.findViewById(R.id.obstacleXCoordinate);
+        TextView obstacleYCoordinate = (TextView) popupView.findViewById(R.id.obstacleYCoordinate);
+
+
         // show the popup window
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         MapGrid mapGrid = view.findViewById(R.id.mapGrid);
+
+        obstacleXCoordinate.setText(String.valueOf(obstacle.getX()));
+        obstacleYCoordinate.setText(String.valueOf(obstacle.getY()));
+
 
         btnN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,6 +327,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static boolean setRobotPosition(int x, int y, char direction) {
+        x--;
+        y--;
         if (0 <= x && x <= 19 && 0 <= y && y <= 19 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')) {
             robot.setCoordinates(x, y);
             robot.setDirection(toUpperCase(direction));

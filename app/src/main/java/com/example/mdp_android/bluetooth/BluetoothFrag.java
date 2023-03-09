@@ -269,6 +269,7 @@ import androidx.fragment.app.FragmentActivity;
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    Log.d(TAG, "whole string"+readMessage);
                     boolean messageIsCommand = false;
                     if (readMessage.split(",")[0].equals("ROBOT")){
                         String[] splitString = readMessage.split(",");
@@ -299,20 +300,87 @@ import androidx.fragment.app.FragmentActivity;
                                 Toast.makeText(activity, "Direction not recognized", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    } else if (readMessage.split(",")[0].split(":")[0].equals("{\"cat\"")) {
-                        Log.d(TAG, readMessage.split(",")[1]);
+                    } else if (readMessage.split(",")[0].split(":")[0].equals("{\"cat\"")&& readMessage.split(",").length >=2) {
+
+                        Log.d(TAG, "parsed string"+readMessage.split(",")[1]);
                         String[] splitString = readMessage.split(",");
-                        if (splitString.length == 2 ){
-                            Log.d(TAG, splitString[1]);
-                            String catString = splitString[0].split(":")[1].replace("}", "");
+                        String catString = splitString[0].split(":")[1].trim();
+                        catString = catString.replace("}", "");
+                        Log.d(TAG, "catstring "+ catString);
+                        if ( catString.equals("\"location\"") && splitString.length == 4){
+                            String[] xString = splitString[1].split(":");
+                            String x = xString[xString.length-1].trim().replace("\"", "").replace("[", "").replace("]", "");
+                            Log.d(TAG, "x: " + x);
+                            String[] yString = splitString[2].split(":");
+                            String y = yString[yString.length-1].trim().replace("\"", "").replace("[", "").replace("]", "");
+
+                            Log.d(TAG, "y: " + y);
+
+                            String[] degreeString = splitString[3].split(":");
+                            String degree = degreeString[degreeString.length-1].trim().replace("\"", "").replace("}", "").replace("[", "").replace("]", "");
+                            Log.d(TAG, "degree: " + degree);
+                            if (isInteger(x) && isInteger(y) && isInteger(degree)){
+                                String direction;
+                                switch (Integer.parseInt(degree)) {
+                                    case 0:
+                                        direction = "E";
+                                        break;
+                                    case 90:
+                                        direction = "N";
+                                        break;
+                                    case 180:
+                                        direction = "W";
+                                        break;
+                                    case 270:
+                                        direction = "S";
+                                        break;
+                                    default:
+                                        direction = null;
+                                }
+                                if (direction.length() == 1 && MainActivity.setRobotPosition(Integer.parseInt(x), Integer.parseInt(y), direction.charAt(0))){
+                                    messageIsCommand = true;
+                                } else if (direction.length() == 1){
+                                    // TODO: check message
+                                    Toast.makeText(activity, "Robot is out of range", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(activity, "Direction not recognized", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+
+                        }else if(splitString.length == 2 && catString.equals("\"status\"") ){
+                            Log.d(TAG, "split"+splitString[1]);
+
                             String statusString = splitString[1].split(":")[1].replace("}", "");
-                            Log.d(TAG, statusString);
+                            Log.d(TAG,  "status"+statusString);
                             if (MainActivity.updateRobotStatus(catString + ":" + statusString)){
                                 messageIsCommand = true;
                             } else {
                                 Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
                             }
+                        }else if(splitString.length == 3 && catString.equals("\"image-rec\"") ){
+                            Log.d(TAG, "split"+splitString[1]);
+
+                            String[] obsString = splitString[1].split(":");
+                            String obstacle_id = obsString[obsString.length-1].trim().replace("\"", "").replace("[", "").replace("]", "");
+                            Log.d(TAG, "obstacle_id: " + obstacle_id);
+                            String[] imgString = splitString[2].split(":");
+                            String img_id = imgString[imgString.length-1].trim().replace("\"", "").replace("[", "").replace("]", "").replace("}", "");
+
+                            Log.d(TAG, "img_id: " + img_id);
+                            if (isInteger(obstacle_id) && isInteger(img_id)){
+                                if (MainActivity.exploreTarget(Integer.parseInt(obstacle_id), Integer.parseInt(img_id))){
+                                    messageIsCommand = true;
+                                } else {
+                                    Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+//                            String[] degreeString = splitString[3].split(":");
+//                            String degree = degreeString[degreeString.length-1].trim().replace("\"", "").replace("}", "").replace("[", "").replace("]", "");
+//                            Log.d(TAG, "degree: " + degree);
                         }
+
                     } else if (readMessage.split(",")[0].equals("TARGET")){
                         String[] splitString = readMessage.split(",");
                         if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
