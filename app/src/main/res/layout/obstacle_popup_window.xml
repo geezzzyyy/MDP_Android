@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Image Side for obstacl: "
+            android:text="Image Side for obstacle: "
             android:fontFamily="@font/aileron_light"
             android:textStyle="bold" />
 

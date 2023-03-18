@@ -271,36 +271,7 @@ import androidx.fragment.app.FragmentActivity;
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Log.d(TAG, "whole string"+readMessage);
                     boolean messageIsCommand = false;
-                    if (readMessage.split(",")[0].equals("ROBOT")){
-                        String[] splitString = readMessage.split(",");
-                        if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && isInteger(splitString[3])){
-                            String direction;
-                            switch (Integer.parseInt(splitString[3])) {
-                                case 0:
-                                    direction = "E";
-                                    break;
-                                case 90:
-                                    direction = "N";
-                                    break;
-                                case 180:
-                                    direction = "W";
-                                    break;
-                                case 270:
-                                    direction = "S";
-                                    break;
-                                default:
-                                    direction = null;
-                            }
-                            if (direction.length() == 1 && MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), direction.charAt(0))){
-                                messageIsCommand = true;
-                            } else if (direction.length() == 1){
-                                // TODO: check message
-                                Toast.makeText(activity, "Robot is out of range", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(activity, "Direction not recognized", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    } else if (readMessage.split(",")[0].split(":")[0].equals("{\"cat\"")&& readMessage.split(",").length >=2) {
+                    if (readMessage.split(",")[0].split(":")[0].equals("{\"cat\"")&& readMessage.split(",").length >=2) {
 
                         Log.d(TAG, "parsed string"+readMessage.split(",")[1]);
                         String[] splitString = readMessage.split(",");
@@ -381,15 +352,6 @@ import androidx.fragment.app.FragmentActivity;
 //                            Log.d(TAG, "degree: " + degree);
                         }
 
-                    } else if (readMessage.split(",")[0].equals("TARGET")){
-                        String[] splitString = readMessage.split(",");
-                        if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
-                            if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))){
-                                messageIsCommand = true;
-                            } else {
-                                Toast.makeText(activity, "TargetID/ObstacleID is out of range", Toast.LENGTH_SHORT).show();
-                            }
-                        }
                     }
                     if (!messageIsCommand){
                         mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
